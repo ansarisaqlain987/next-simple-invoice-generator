@@ -12,6 +12,7 @@
     "migration:undo": "bunx knex migrate:down"
   },
   "dependencies": {
+    "@logto/next": "^3.3.4",
     "@prisma/client": "^5.17.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
