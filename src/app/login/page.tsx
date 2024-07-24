@@ -36,7 +36,7 @@ export function Dashboard() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    loginMutation.mutate({email: 'test'})
+    loginMutation.mutate(values)
     console.log(values);
     toast({description: 'test value'})
     
