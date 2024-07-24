@@ -3,10 +3,6 @@ import { getLogtoContext, signIn, signOut } from "@logto/next/server-actions";
 import SignIn from "./sign-in";
 import SignOut from "./sign-out";
 
-
-
-
-
 export default async function Home() {
   const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
   console.log(claims)
