@@ -1,40 +1,45 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { useLogin } from "@/db/mutations/useLogin"
+import { useToast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   email: z.string().min(3, {
     message: "Email must be at least 2 characters.",
   }).refine((val) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(val ?? ""), "Please enter a valid email address"),
 })
-
 export function Dashboard() {
+  const { toast } = useToast()
+  const loginMutation = useLogin();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
     },
-  })
+  });
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+    loginMutation.mutate({email: 'test'})
+    console.log(values);
+    toast({description: 'test value'})
+    
   }
   return (
     <div className="w-full h-full flex justify-center">
@@ -57,7 +62,7 @@ export function Dashboard() {
                         <FormItem>
                           <FormLabel>Email</FormLabel>
                           <FormControl>
-                            <Input placeholder="shadcn" {...field} />
+                            <Input placeholder="example@domain.com" {...field} />
                           </FormControl>
                           <FormMessage className="text-xs" />
                         </FormItem>

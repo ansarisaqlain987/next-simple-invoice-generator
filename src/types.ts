@@ -1,3 +1,4 @@
+export type Nullable<T> = T | null | undefined;
 export type EnvConfig = {
     DATABASE_URL: string
     DB_NAME: string
@@ -13,4 +14,11 @@ export type EnvConfig = {
 
     APP_URL: string
     NODE_ENV: string
+}
+
+export type ApiResponse = {
+    error?: any[];
+    data: any;
+    message: string;
+    code: number;
 }
