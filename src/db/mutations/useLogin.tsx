@@ -1,11 +1,12 @@
 import axios from "axios";
-import { postRequest, useMutation } from "./../index";
+import { useMutation } from "./../index";
 import { z } from 'zod';
 import { LoginApiInput } from "@/zod-types";
 
 const useLoginMutationFunction = async (inputs: z.infer<typeof LoginApiInput>) => {
-    return await axios.post('/api/login', inputs);
+    const data = await axios.post('/api/login', inputs);
+    return data.data;
 }
 export const useLogin = () => {
-    return useMutation<z.infer<typeof LoginApiInput>>({mutationFn: useLoginMutationFunction})
+    return useMutation<z.infer<typeof LoginApiInput>>({mutationFn: useLoginMutationFunction, hideSuccess: true, hideError: true})
 }

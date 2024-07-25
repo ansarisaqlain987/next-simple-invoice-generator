@@ -15,14 +15,14 @@ import {
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { useLogin } from "@/db/mutations/useLogin"
 import { useToast } from "@/components/ui/use-toast"
+import { LoginApiInput as formSchema } from '@/zod-types';
+import { ApiResponse } from "@/types"
+import { useState } from "react"
 
-const formSchema = z.object({
-  email: z.string().min(3, {
-    message: "Email must be at least 2 characters.",
-  }).refine((val) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(val ?? ""), "Please enter a valid email address"),
-})
+
 export function Dashboard() {
-  const { toast } = useToast()
+  const { toast } = useToast();
+  const [otpSent, setOtpSent] = useState<boolean>(false);
   const loginMutation = useLogin();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -36,10 +36,19 @@ export function Dashboard() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    loginMutation.mutate(values)
-    console.log(values);
-    toast({description: 'test value'})
-    
+    const pr = loginMutation.mutateAsync(values);
+    pr.then((resp: ApiResponse) => {
+      if (resp.code !== 200) {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: resp.message
+        })
+      } else {
+        setOtpSent(true);
+        console.log("OTP")
+      }
+    })
   }
   return (
     <div className="w-full h-full flex justify-center">

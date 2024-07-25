@@ -24,6 +24,7 @@ export const useMutation = <TVars=any,>(
 
     return useReactMutation({
         mutationFn: mutationFn,
+        retry: 3,
         onError: (error: Error) => {
             if (!hideError) {
                 toast({
