@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "bun run migration:run && next start",
     "lint": "next lint",
     "migration:create": "bunx knex migrate:make -x ts",
     "migration:run": "bunx knex migrate:up",
