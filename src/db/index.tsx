@@ -26,6 +26,7 @@ export const useMutation = <TVars=any,>(
         mutationFn: mutationFn,
         retry: 3,
         onError: (error: Error) => {
+            console.log(error)
             if (!hideError) {
                 toast({
                     variant: "destructive",
