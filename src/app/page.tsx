@@ -3,6 +3,7 @@ import { getLogtoContext, signIn, signOut } from "@logto/next/server-actions";
 import AuthComponent from "./auth";
 
 export default async function Home() {
-  const { isAuthenticated } = await getLogtoContext(logtoConfig);
+  const { isAuthenticated, claims} = await getLogtoContext(logtoConfig);
+  console.log(claims)
   return <AuthComponent auth={isAuthenticated} />
 }

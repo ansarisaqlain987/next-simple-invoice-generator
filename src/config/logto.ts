@@ -1,5 +1,6 @@
 import { EnvConfig } from '@/types';
 import './../../envConfig';
+import { LogtoNextConfig, UserScope } from "@logto/next";
 
 const envVars: EnvConfig = process.env as any;
 const {
@@ -11,11 +12,12 @@ const {
 } = envVars;
 
 
-export const logtoConfig = {
-    endpoint: AUTH_ENDPOINT,
-    appId: AUTH_APP_ID,
-    appSecret: AUTHA_APP_SECRET,
-    baseUrl: APP_URL, // Change to your own base URL
-    cookieSecret: COOKIE_SECRET, // Auto-generated 32 digit secret
-    cookieSecure: process.env.NODE_ENV === 'production',
+export const logtoConfig: LogtoNextConfig = {
+  endpoint: AUTH_ENDPOINT,
+  appId: AUTH_APP_ID,
+  appSecret: AUTHA_APP_SECRET,
+  baseUrl: APP_URL,
+  cookieSecret: COOKIE_SECRET,
+  cookieSecure: process.env.NODE_ENV === "production",
+  scopes: [UserScope.Email]
 };

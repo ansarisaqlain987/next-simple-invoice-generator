@@ -13,9 +13,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Envelop {
-  id          Int      @id @default(autoincrement())
-  name        String
+model User {
+  id      String @id @default(uuid())
+  auth_id String  @unique()
+  email   String  @unique()
 
-  @@map("test_users")
+  @@map("users")
 }

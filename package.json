@@ -9,7 +9,9 @@
     "lint": "next lint",
     "migration:create": "bunx knex migrate:make -x ts",
     "migration:run": "bunx knex migrate:up",
-    "migration:undo": "bunx knex migrate:down"
+    "migration:undo": "bunx knex migrate:down",
+    "prisma:gen": "bunx prisma generate",
+    "prisma:format": "bunx prisma format"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

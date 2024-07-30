@@ -1,6 +1,8 @@
+'use client'
 import { Button } from "@/components/ui/button";
 import { Payment, columns } from "./columns";
 import { DataTable } from "./data-table"
+import { useRouter } from 'next/navigation'
 
 const data: Payment[] = [
     {
@@ -151,12 +153,16 @@ const data: Payment[] = [
 ]
 
 const ClientPage = () => {
+    const router = useRouter();
     return <div>
         <div className="flex mb-4">
             <div className="flex flex-1 text-xl items-center font-semibold">
                 <div>Clients</div>
             </div>
-            <Button className="px-6">Add</Button>
+            <Button className="px-6" onClick={() => {
+                console.log('HERE')
+                router.push('/dashboard/clients/new');
+            }}>Add</Button>
         </div>
         <div className="h-[80vh] overflow-auto mt-4">
             <DataTable columns={columns} data={data} />

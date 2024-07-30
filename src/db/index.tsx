@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { useToast } from "@/components/ui/use-toast"
 import { ApiResponse, Nullable } from '@/types';
 import { QueryClient, UseMutationOptions, useMutation as useReactMutation } from "@tanstack/react-query"
+import { PrismaClient } from "@prisma/client";
 
 export const getRequest = () => {
     return axios.get('/api/sample');
@@ -55,3 +56,5 @@ export const useMutation = <TVars=any,>(
         ...restOptions
     }, queryClient)
 }
+
+export const prisma = new PrismaClient();
