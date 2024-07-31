@@ -8,34 +8,35 @@ export const createOrUpdateClient = async (inputData: {
   id?: string | null;
   name: string;
   description: string;
-}) => {
-  console.log("input: ", inputData);
+}): Promise<{data: any, error: any}> => {
   const userInfo = await getUserInfo();
+  let data = {};
   try {
-    // if (inputData.id) {
-      return await prisma.client.update({
+    if (inputData.id) {
+      data = await prisma.client.update({
         where: {
-          id: "160bd051-7209-4c32-939a-821f72131acf",
-          user: "test",
+          id: inputData.id,
+          user: userInfo.email,
         },
         data: {
           name: inputData.name,
           description: inputData.description,
         },
       });
-    // }
-    return await prisma.client.create({
-      data: {
-        id: "160bd051-7209-4c32-939a-821f72131acf",
-        name: "TEST", //inputData.name,
-        description: "TEST",
-        user: "TEST",
-      },
-    });
-  } catch (err: Error | any) {
-    console.log(err)
-    return {
-        message: err.message,
+    } else {
+      data = await prisma.client.create({
+        data: {
+          name: inputData.name,
+          description: inputData.description,
+          user: userInfo.email,
+        },
+      });
     }
+    return { data, error: null };
+  } catch (err: Error | any) {
+    return {
+      data: null,
+      error: err,
+    };
   }
 };

@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useCreateOrUpdateClient } from "@/db/mutations/useCreateOrUpdateClient";
 import { createOrUpdateClient } from "@/app/actions/createOrUpdateClient";
+import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   name: z.string().min(2).max(100),
@@ -27,6 +28,7 @@ type Props = {
 const ClientForm = ({ id }: Props) => {
   const mutation = useCreateOrUpdateClient();
   const router = useRouter();
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,16 +41,24 @@ const ClientForm = ({ id }: Props) => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    await createOrUpdateClient({
-      id,
-      name: values.name,
-      description: values.description,
-    });
-    // mutation
-    //   .mutateAsync({ id, name: values.name, description: values.description })
-    //   .then(() => {
-    //     router.back();
-    //   });
+    // await createOrUpdateClient({
+    //   id,
+    //   name: values.name,
+    //   description: values.description,
+    // });
+    mutation
+      .mutateAsync({ id, name: values.name, description: values.description })
+      .then((value) => {
+        if (value?.error) {
+          toast({
+            title: "Error",
+            description: value.error.message,
+            variant: "destructive",
+          });
+        } else {
+          router.back();
+        }
+      });
   }
 
   return (
