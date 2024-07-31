@@ -8,7 +8,7 @@
     "start": "bun run migration:run && next start",
     "lint": "next lint",
     "migration:create": "bunx knex migrate:make -x ts",
-    "migration:run": "bunx knex migrate:up",
+    "migration:run": "bunx knex migrate:latest",
     "migration:undo": "bunx knex migrate:down",
     "prisma:gen": "bunx prisma generate",
     "prisma:format": "bunx prisma format"

@@ -160,7 +160,6 @@ const ClientPage = () => {
                 <div>Clients</div>
             </div>
             <Button className="px-6" onClick={() => {
-                console.log('HERE')
                 router.push('/dashboard/clients/new');
             }}>Add</Button>
         </div>

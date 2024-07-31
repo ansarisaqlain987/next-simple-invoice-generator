@@ -1,3 +1,4 @@
+"use server"
 import type { Knex } from "knex";
 
 
@@ -6,7 +7,7 @@ export async function up(knex: Knex): Promise<void> {
         table.uuid("id").defaultTo(knex.raw("gen_random_uuid()"));
         table.string('user').notNullable();
         table.string('name', 100).notNullable();
-        table.string('description', 400).nullable();
+        table.string('description', 400).defaultTo('');
     })
 }
 
