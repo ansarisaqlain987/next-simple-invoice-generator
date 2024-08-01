@@ -29,3 +29,8 @@ export type UserInfo = {
     name: string;
     picture: string;
 }
+
+export type DbActionResponse = {
+    data: any;
+    error: any;
+}

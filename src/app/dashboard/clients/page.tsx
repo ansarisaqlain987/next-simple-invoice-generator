@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Payment, columns } from "./columns";
 import { DataTable } from "./data-table"
 import { useRouter } from 'next/navigation'
+import { useGetClients } from "@/db/queries/useGetClients";
 
 const data: Payment[] = [
     {
@@ -154,6 +155,8 @@ const data: Payment[] = [
 
 const ClientPage = () => {
     const router = useRouter();
+    const {data: clientData} = useGetClients();
+    console.log(clientData)
     return <div>
         <div className="flex mb-4">
             <div className="flex flex-1 text-xl items-center font-semibold">
@@ -164,7 +167,7 @@ const ClientPage = () => {
             }}>Add</Button>
         </div>
         <div className="h-[80vh] overflow-auto mt-4">
-            <DataTable columns={columns} data={data} />
+            <DataTable columns={columns} data={clientData?.data ?? []} />
         </div>
     </div>
 }

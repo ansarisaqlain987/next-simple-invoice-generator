@@ -36,7 +36,7 @@ export const createOrUpdateClient = async (inputData: {
   } catch (err: Error | any) {
     return {
       data: null,
-      error: err,
+      error: {message: err.message},
     };
   }
 };
