@@ -8,7 +8,7 @@ export const getClients = async (): Promise<DbActionResponse> => {
   const userInfo = await getUserInfo();
   try {
     const data = await prisma.client.findMany({
-      where: { user: userInfo.email },
+      where: { user: userInfo.email, deleted: false },
     });
     return { data, error: null };
   } catch (err: Error | any) {
@@ -68,11 +68,15 @@ export const createOrUpdateClient = async (inputData: {
 export const deleteClient = async (id: string): Promise<DbActionResponse> => {
   const userInfo = await getUserInfo();
   try {
-    const data = await prisma.client.delete({
+    const data = await prisma.client.update({
       where: {
         id,
         user: userInfo.email,
       },
+      data: {
+        deleted: true,
+        updatedAt: new Date(),
+      }
     });
     return { data, error: null };
   } catch (err: Error | any) {

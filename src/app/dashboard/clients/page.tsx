@@ -15,13 +15,14 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { getColumns } from "./columns";
-import { useAlertDialog } from "@/app/hooks/useAlertDIalog";
 import { useState } from "react";
 import { deleteClient } from "@/app/actions/clients";
+import { useAlertDialog } from "@/app/hooks/useAlertDialog";
 
 const ClientPage = () => {
   const router = useRouter();
   const { data: clientData, refetch } = useGetClients();
+  console.log(clientData);
   const [dId, setDId] = useState<string | null>(null);
   const onDelete = (id: string) => {
     setDId(id);

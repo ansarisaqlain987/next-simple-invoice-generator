@@ -37,7 +37,6 @@ const ClientForm = ({ id }: Props) => {
     mutation
       .mutateAsync({ id, name: values.name, description: values.description })
       .then((value) => {
-        console.log("value", value);
         if (value?.error) {
           toast({
             title: "Error",

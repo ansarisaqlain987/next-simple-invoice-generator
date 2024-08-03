@@ -19,8 +19,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
-
-import { useAlertDialog } from "@/app/hooks/useAlertDIalog";
 import { getColumns } from "./columns";
 
 interface DataTableProps<TData, TValue> {
