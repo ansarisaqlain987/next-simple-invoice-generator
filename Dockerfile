@@ -20,4 +20,4 @@ RUN bun next build
 EXPOSE 3000
 
 # Command to run the application
-CMD ["bun", "start"]
+CMD ["bun", "next", "start"]
