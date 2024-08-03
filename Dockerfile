@@ -10,14 +10,16 @@ COPY package.json bun.lockb ./
 # Install dependencies
 RUN bun install
 
-# Copy the rest of the application code to the container
-COPY . .
-
 # Run prisma generate
 RUN bun prisma:gen
 
+# Copy the rest of the application code to the container
+COPY . .
+
+RUN bun migration:run
+
 # Build the Next.js application
-RUN bun next build
+RUN bun build
 
 # Expose the port on which the app will run
 EXPOSE 3000
