@@ -22,4 +22,4 @@ const config: { [key: string]: Knex.Config } = {
   production: dbConfig
 };
 
-module.exports = config;
+export default config
