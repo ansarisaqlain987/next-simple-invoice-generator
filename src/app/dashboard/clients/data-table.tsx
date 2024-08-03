@@ -20,12 +20,15 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 
+import { useAlertDialog } from "@/app/hooks/useAlertDIalog";
+import { getColumns } from "./columns";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData = any, TValue = any>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -33,7 +36,7 @@ export function DataTable<TData, TValue>({
 
   const table = useReactTable({
     data,
-    columns,
+    columns ,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),

@@ -64,3 +64,18 @@ export const createOrUpdateClient = async (inputData: {
     };
   }
 };
+
+export const deleteClient = async (id: string): Promise<DbActionResponse> => {
+  const userInfo = await getUserInfo();
+  try {
+    const data = await prisma.client.delete({
+      where: {
+        id,
+        user: userInfo.email,
+      },
+    });
+    return { data, error: null };
+  } catch (err: Error | any) {
+    return { data: null, error: { message: err?.message } };
+  }
+};
