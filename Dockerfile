@@ -16,6 +16,9 @@ COPY . .
 # Build the Next.js application
 RUN bun next build
 
+# Run prisma generate
+RUN bun prisma:gen
+
 # Expose the port on which the app will run
 EXPOSE 3000
 
