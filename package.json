@@ -12,7 +12,8 @@
     "migration:run": "bunx knex migrate:latest",
     "migration:undo": "bunx knex migrate:down",
     "prisma:gen": "bunx prisma generate",
-    "prisma:format": "bunx prisma format"
+    "prisma:format": "bunx prisma format",
+    "post:deploy": "bun prisma:gen && bun migration:run"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
