@@ -13,10 +13,11 @@ RUN bun install
 # Run prisma generate
 RUN bun prisma:gen
 
+# Run migrations
+RUN bun migration:run
+
 # Copy the rest of the application code to the container
 COPY . .
-
-RUN bun migration:run
 
 # Build the Next.js application
 RUN bun build
