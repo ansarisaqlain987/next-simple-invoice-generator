@@ -20,6 +20,9 @@ WORKDIR /app
 # Copy the package.json and bun.lockb files first to leverage Docker's cache
 COPY package.json bun.lockb ./
 
+# Run prisma generate
+RUN bun prisma:gen
+
 # Install dependencies
 RUN bun install
 
