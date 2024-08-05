@@ -18,16 +18,13 @@ ENV NODE_ENV=${NODE_ENV}
 WORKDIR /app
 
 # Copy the package.json and bun.lockb files first to leverage Docker's cache
-COPY package.json bun.lockb src ./
+COPY . ./
 
 # Install dependencies
 RUN bun install
 
 # Run prisma generate
 RUN bun prisma:gen
-
-# Copy the rest of the application code to the container
-COPY . .
 
 # Build the Next.js application
 RUN bun next build
