@@ -55,6 +55,6 @@
     "eslint-config-next": "14.2.5"
   },
   "prisma": {
-    "schema": "./src/db/schema.prisma"
+    "schema": "src/db/schema.prisma"
   }
 }
