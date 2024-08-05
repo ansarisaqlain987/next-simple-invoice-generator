@@ -14,24 +14,29 @@ ENV DB_PORT=${DB_PORT}
 ENV DB_USER=${DB_USER}
 ENV NODE_ENV=${NODE_ENV}
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the package.json and bun.lockb files first to leverage Docker's cache
-COPY . .
+# Copy package.json and bun.lockb
+COPY package.json bun.lockb ./
 
-# Install dependencies
+# Install dependencies using Bun
 RUN bun install
 
-RUN bun migration:run
-# Run prisma generate
-RUN bun prisma:gen
+# Copy the rest of the application code
+COPY . .
+
+# Generate Prisma client
+RUN bunx prisma generate
 
 # Build the Next.js application
 RUN bun next build
 
-# Expose the port on which the app will run
+# Expose the port the app runs on
 EXPOSE 3000
 
-# Command to run the application
+# Run Knex migration scripts
+RUN bunx knex migrate:latest
+
+# Start the Next.js application
 CMD ["bun", "next", "start"]
