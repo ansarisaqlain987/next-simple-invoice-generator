@@ -18,7 +18,7 @@ ENV NODE_ENV=${NODE_ENV}
 WORKDIR /app
 
 # Copy the package.json and bun.lockb files first to leverage Docker's cache
-COPY . ./
+COPY . .
 
 # Install dependencies
 RUN bun install
