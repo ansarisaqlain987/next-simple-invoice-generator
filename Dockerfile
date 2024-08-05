@@ -23,15 +23,15 @@ COPY . .
 # Install dependencies
 RUN bun install
 
+RUN bun migration:run
+# Run prisma generate
+RUN bun prisma:gen
+
 # Build the Next.js application
 RUN bun next build
 
 # Expose the port on which the app will run
 EXPOSE 3000
-
-RUN bun migration:run
-# Run prisma generate
-RUN bun prisma:gen
 
 # Command to run the application
 CMD ["bun", "next", "start"]
