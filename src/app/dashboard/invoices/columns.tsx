@@ -12,23 +12,36 @@ import {
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 
-export type UserDetails = {
+export type InvoiceDetails = {
+  client: {
+    id: string;
+    name: string;
+  };
+  invoiceItems: {
+    id: string;
+    title: string;
+    amount: number;
+  }[];
+} & {
   id: string;
   user: string;
-  name: string;
+  title: string;
   description: string;
+  deleted: boolean;
   createdAt: Date;
   updatedAt: Date;
-};
+  clientId: string;
+}
 
 export type Props = {
   onDelete?: (id: string) => void;
   openDialog?: Dispatch<SetStateAction<boolean>>;
 };
 export const getColumns = ({openDialog, onDelete}: Props) => {
-  const columns: ColumnDef<UserDetails, any>[] = [
+  const columns: ColumnDef<InvoiceDetails, any>[] = [
     {
-      accessorKey: "name",
+      accessorKey: "client.name",
+      accessorFn: (row) => row.client.name,
       size: 100,
       header: ({ column }) => {
         return (
@@ -37,16 +50,32 @@ export const getColumns = ({openDialog, onDelete}: Props) => {
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             className="pl-0"
           >
-            Name
+            Client
             <ArrowUpDown className="h-4 w-4 ml-2" />
           </Button>
         );
       },
     },
     {
-      accessorKey: "description",
-      header: "Description",
+      accessorKey: "title",
+      header: "Title",
       size: 100,
+    },
+    {
+      accessorKey: "amount",
+      size: 100,
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className="pl-0"
+          >
+            Amount
+            <ArrowUpDown className="h-4 w-4 ml-2" />
+          </Button>
+        );
+      },
     },
     {
       id: "actions",
@@ -64,7 +93,14 @@ export const getColumns = ({openDialog, onDelete}: Props) => {
                 <Link href={`/dashboard/clients/${row.original.id}`}>
                   <DropdownMenuItem>Edit</DropdownMenuItem>
                 </Link>
-                <DropdownMenuItem onClick={() => {onDelete?.(row.original.id); openDialog?.(true)}}>Delete</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    onDelete?.(row.original.id);
+                    openDialog?.(true);
+                  }}
+                >
+                  Delete
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

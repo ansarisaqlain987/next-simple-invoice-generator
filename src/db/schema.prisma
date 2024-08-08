@@ -14,15 +14,14 @@ datasource db {
 }
 
 model Client {
-  id           String         @id @default(uuid())
-  user         String
-  name         String
-  description  String
-  deleted      Boolean        @default(false)
-  createdAt    DateTime       @default(now()) @map("created_at")
-  updatedAt    DateTime       @updatedAt @map("updated_at")
-  Invoice      Invoice[]
-  InvoiceItems InvoiceItems[]
+  id          String    @id @default(uuid())
+  user        String
+  name        String
+  description String
+  deleted     Boolean   @default(false)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  invoices    Invoice[]
 
   @@map("clients")
 }
@@ -37,7 +36,8 @@ model Invoice {
   updatedAt   DateTime @updatedAt @map("updated_at")
   clientId    String   @map("client_id")
 
-  client Client @relation(fields: [clientId], references: [id])
+  client       Client         @relation(fields: [clientId], references: [id])
+  invoiceItems InvoiceItems[]
 
   @@map("invoices")
 }
@@ -47,9 +47,10 @@ model InvoiceItems {
   user        String
   title       String
   description String
+  amount      Float
   invoiceId   String @map("invoice_id")
 
-  invoice Client @relation(fields: [invoiceId], references: [id])
+  invoice Invoice @relation(fields: [invoiceId], references: [id])
 
   @@map("invoice_items")
 }
